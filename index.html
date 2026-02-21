@@ -1,133 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DevInfo · personal portfolio</title>
-  <!-- Google Font & Font Awesome -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="dev.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekta · unique portfolio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <!-- top bar with logo & theme toggle -->
-    <div class="top-bar">
-      <span class="logo">🛠️ DevInfo</span>
-      <div class="theme-toggle" id="themeToggle" role="button" tabindex="0" aria-label="switch theme">
-        <i id="themeIcon" class="fas fa-sun"></i>
-        <span id="themeText">Light</span>
-      </div>
+    <header>
+        <div class="logo">✨ Ekta</div>
+        <nav id="dynamic-menu">
+            <a href="#about" id="menu-about">About</a>
+            <a href="#projects" id="menu-projects">Projects</a>
+            <a href="#hire" id="menu-hire">Hire</a>
+        </nav>
+        <div class="flex">
+            <span id="user-info"></span>
+            <button id="logout-btn" style="display:none;">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- ABOUT SECTION -->
+        <section id="about">
+            <div id="cover-photo" class="cover-img" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('cover.jpg'); background-size: cover; background-position: center;">
+            </div>
+            <div class="profile-row">
+                <img id="profile-photo" class="profile-photo" src="riyad.png" alt="profile" style="aspect-ratio: 1/1; object-fit: cover;">
+                <div class="bio">
+                    <h2 id="bio-text">Ekta — creative developer & designer</h2>
+                    <p>I craft digital experiences with a focus on uniqueness. This portfolio adapts to your preferences. You can toggle every block below.</p>
+                </div>
+            </div>
+            <div id="skills-list" class="skills">
+                <span class="skill-tag">HTML/CSS</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Firebase</span>
+                <span class="skill-tag">UI/UX</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Figma</span>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE & EDUCATION -->
+        <section id="experience">
+            <h2 style="margin: 3rem 0 1rem;">📚 experience & education</h2>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px; background: white; padding: 1.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                    <h3>💼 work</h3>
+                    <ul style="margin-top: 1rem; list-style: none;">
+                        <li style="margin-bottom: 1rem;"><strong>Frontend Dev</strong> — Studio Oktopus (2023–present)</li>
+                        <li style="margin-bottom: 1rem;"><strong>UI/UX intern</strong> — DesignLab (2022–2023)</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 250px; background: white; padding: 1.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                    <h3>🎓 education</h3>
+                    <ul style="margin-top: 1rem; list-style: none;">
+                        <li style="margin-bottom: 1rem;"><strong>B.Sc. in CSE</strong> — University of Design (2018–2022)</li>
+                        <li style="margin-bottom: 1rem;"><strong>Cert. in UX</strong> — Interaction Design Foundation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS SECTION with data attributes -->
+        <section id="projects">
+            <h2 style="margin: 3rem 0 1rem;">⚡ selected projects</h2>
+            <div class="projects-grid">
+                <div class="project-card" onclick="showProjectDetails(this)"
+                     data-description="A brutalist dashboard with neo elements. Built with React and D3."
+                     data-link="https://example.com/neobrutal">
+                    <div class="card-image">
+                        <img src="https://picsum.photos/300/300?random=1" alt="NeoBrutal dashboard" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="card-title">NeoBrutal dashboard</div>
+                </div>
+                <div class="project-card" onclick="showProjectDetails(this)"
+                     data-description="AI-generated motion gallery using TensorFlow.js and Canvas."
+                     data-link="https://example.com/ai-motion">
+                    <div class="card-image">
+                        <img src="https://picsum.photos/300/300?random=2" alt="AI motion gallery" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="card-title">AI motion gallery</div>
+                </div>
+                <div class="project-card" onclick="showProjectDetails(this)"
+                     data-description="Peer-to-peer weather sharing app with WebRTC and OpenWeather API."
+                     data-link="https://example.com/weather-p2p">
+                    <div class="card-image">
+                        <img src="https://picsum.photos/300/300?random=3" alt="Weather p2p" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="card-title">Weather p2p</div>
+                </div>
+                <div class="project-card" onclick="showProjectDetails(this)"
+                     data-description="Eco tracker for carbon footprint using Leaflet maps and local storage."
+                     data-link="https://example.com/eco-tracker">
+                    <div class="card-image">
+                        <img src="https://picsum.photos/300/300?random=4" alt="Eco tracker" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="card-title">Eco tracker</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" style="margin: 3rem 0;">
+            <div style="background: #1e293b; color: white; padding: 2rem; border-radius: 32px; text-align: center;">
+                <h2>📬 get in touch</h2>
+                <p style="margin: 1rem 0;">Have a project in mind? I'd love to hear about it.</p>
+                <a href="mailto:hello@ekta.dev" style="background: #facc15; color: #0f172a; padding: 0.6rem 2rem; border-radius: 40px; text-decoration: none; font-weight: bold;">hello@ekta.dev</a>
+                <div style="margin-top: 1.5rem;">
+                    <a href="#" style="color: #facc15; margin: 0 0.5rem;">𝕏</a>
+                    <a href="#" style="color: #facc15; margin: 0 0.5rem;">🖇️</a>
+                    <a href="#" style="color: #facc15; margin: 0 0.5rem;">📷</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- HIRE / CUSTOMIZATION SECTION -->
+        <section id="hire">
+            <h2>⚙️ customize your portfolio</h2>
+            <div id="login-section" class="login-section hire-panel">
+                <h3>🔐 login to save changes (admin: admin@ekta.com)</h3>
+                <div class="flex">
+                    <input type="email" id="login-email" placeholder="email" value="demo@ekta.com">
+                    <input type="password" id="login-password" placeholder="password" value="123456">
+                    <button id="login-btn">Login</button>
+                    <button id="signup-btn">Signup</button>
+                </div>
+                <p style="margin-top:1rem; font-size:0.9rem;">Use any email to test. After login, toggle options and save.</p>
+            </div>
+            <div id="hire-panel" class="hire-panel" style="display: none;">
+                <h3>🛠️ toggle visible blocks (save updates Firebase)</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-col">
+                        <strong>📋 menu items</strong>
+                        <label><input type="checkbox" id="menu-about-check" class="menu-check" checked> About</label>
+                        <label><input type="checkbox" id="menu-projects-check" class="menu-check" checked> Projects</label>
+                        <label><input type="checkbox" id="menu-hire-check" class="menu-check" checked> Hire (this tab)</label>
+                    </div>
+                    <div class="checkbox-col">
+                        <strong>🧩 about features</strong>
+                        <label><input type="checkbox" id="feature-photo" class="feature-check" checked> Profile photo</label>
+                        <label><input type="checkbox" id="feature-cover" class="feature-check" checked> Cover image</label>
+                        <label><input type="checkbox" id="feature-bio" class="feature-check" checked> Bio text</label>
+                        <label><input type="checkbox" id="feature-skills" class="feature-check" checked> Skills tags</label>
+                    </div>
+                    <div class="checkbox-col">
+                        <strong>📌 footer items</strong>
+                        <label><input type="checkbox" id="footer-show" class="footer-check" checked> Show footer</label>
+                        <label><input type="checkbox" id="footer-copyright-check" class="footer-check" checked> Copyright</label>
+                        <label><input type="checkbox" id="footer-social-check" class="footer-check" checked> Social links</label>
+                    </div>
+                </div>
+                <button id="save-settings">💾 save settings to Firebase</button>
+            </div>
+            <div id="admin-panel" style="display: none;">
+                <h3>👁️ admin tasks (all settings docs)</h3>
+                <div id="admin-task-list">loading tasks...</div>
+            </div>
+        </section>
     </div>
 
-    <!-- main profile card with 1:1 picture -->
-    <div class="profile-card">
-      <div class="profile-row">
-        <div class="avatar">
-          <!-- REPLACE THIS WITH YOUR ACTUAL IMAGE PATH (1:1 recommended) -->
-          <img src="riyad.jpg" alt="Faizul Islam Riyad">
-        </div>
-        <div class="profile-info">
-          <h1>Faizul Islam Riyad</h1>
-          <span class="badge"><i class="fas fa-code"></i> full‑stack </span>
-          <p class="bio">
-            <i class="fas fa-map-pin" style="margin-right: 6px; color: var(--accent);"></i> Barishal, Bangladesh
-            · Web devlopment start from 2024.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- skills section -->
-    <div class="section-title"><i class="fas fa-cog"></i> tech stack & skills</div>
-    <div class="skills-grid">
-      <span class="skill-tag">JavaScript (ES6+)</span>
-      <span class="skill-tag">React & Next.js</span>
-      <span class="skill-tag">Node.js / Express</span>
-      <span class="skill-tag">Python (Flask)</span>
-      <span class="skill-tag">TypeScript</span>
-      <span class="skill-tag">MongoDB</span>
-      <span class="skill-tag">PostgreSQL</span>
-      <span class="skill-tag">Tailwind / CSS3</span>
-      <span class="skill-tag">Git & CI/CD</span>
-      <span class="skill-tag">REST / GraphQL</span>
-    </div>
-
-    <!-- projects -->
-    <div class="section-title"><i class="fas fa-rocket"></i> featured projects</div>
-    <div class="project-grid">
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-cart-shopping"></i></div>
-        <h3>4CSTB1</h3>
-        <div class="project-stack">HTML · CSS · JavaScript · Firebase</div>
-        <p>A class Management Website for Barishal Polytecnic Institute computer department's student (Session : 2023-24) </p>
-      </div>
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-tasks"></i></div>
-        <h3>FAI Media</h3>
-        <div class="project-stack">HTML · CSS · JavaScript · Firebase </div>
-        <p></p>
-      </div>
-      <div class="project-card">
-        <div class="project-icon"><i class="fas fa-robot"></i></div>
-        <h3>Explre Routine</h3>
-        <div class="project-stack">HTML · CSS · JavaScript · Firebase</div>
-        <p>A Routine Management Website For Barishal Polytecnic Institute all department student's.</p>
-      </div>
-    </div>
-
-    <!-- contact area: two columns (social + form) -->
-    <div class="contact-section">
-      <!-- left side: social & contact info -->
-      <div class="social-links">
-        <h3><i class="fas fa-address-card"></i> connect with me</h3>
-        <div class="social-icons">
-          <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-          <a href="#" class="social-icon"><i class="fa-solid fa-envelope"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <div class="contact-detail">
-          <i class="fas fa-envelope"></i>
-          <a href="mailto:mdriyadboss1234@gmail.com" style="color: inherit; text-decoration: none;">
-            mdriyadboss1234@gmail.com
-          </a>
-        </div>
-        <div class="contact-detail">
-          <i class="fas fa-phone-alt"></i> +8801304375487
-        </div>
-        <div class="contact-detail">
-          <i class="fas fa-globe"></i> dev.info
-        </div>
-
-      <!-- right side: contact form (opens email client) -->
-      <div class="form-box">
-        <h3><i class="fas fa-paper-plane"></i> drop a message</h3>
-        <form id="contactForm">
-          <div class="form-group">
-            <input type="text" id="nameInput" placeholder="Your name" required>
-          </div>
-          <div class="form-group">
-            <input type="email" id="emailInput" placeholder="Email address" required>
-          </div>
-          <div class="form-group">
-            <textarea id="msgInput" placeholder="What would you like to say?" rows="3" required></textarea>
-          </div>
-          <button type="submit" class="btn"><i class="fas fa-paper-plane" style="margin-right: 8px;"></i>Send message</button>
-        </form>
-        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--text-secondary);">
-          * opens your email app
-        </p>
-      </div>
-    </div>
-
-    <!-- footer -->
+    <!-- FOOTER -->
     <footer>
-      <p>© 2026 Faizul Islam Riyad — built with <i class="fas fa-heart" style="color: #f43f5e;"></i> using HTML/CSS/JS · developer info hub</p>
+        <div id="footer-copyright">© 2025 Ekta. All rights reserved.</div>
+        <div id="footer-social">
+            <a href="#">𝕏</a> · <a href="#">🖇️</a> · <a href="#">📷</a>
+        </div>
     </footer>
-  </div>
-  <script src="dev.js"></script>
+
+    <!-- PROJECT DETAIL MODAL with description and link button -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Project title</h2>
+            <p id="modal-desc">Detailed description goes here.</p>
+            <a id="modal-link" href="#" target="_blank" class="modal-link-btn">🔗 View Project</a>
+        </div>
+    </div>
+
+    <script>
+        window.showProjectDetails = window.showProjectDetails || function(card){ alert('Project details'); };
+        window.closeModal = window.closeModal || function(){ document.getElementById('project-modal').style.display='none'; };
+    </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
