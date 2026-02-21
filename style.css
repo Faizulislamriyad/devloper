@@ -82,7 +82,7 @@ button:disabled {
   width: 100%;
   height: 200px;
   border-radius: 24px;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem; /* reduced to allow closer overlap */
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -95,6 +95,9 @@ button:disabled {
   gap: 2rem;
   flex-wrap: wrap;
   align-items: center;
+  margin-top: -48px; /* pulls profile photo up to overlap cover */
+  position: relative;
+  z-index: 2;
 }
 .profile-photo {
   width: 140px;
@@ -102,12 +105,20 @@ button:disabled {
   border-radius: 50%;
   background: #94a3b8;
   border: 4px solid white;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
   object-fit: cover;
 }
 .bio {
   flex: 1;
   min-width: 250px;
+  background: rgba(255,255,255,0.7); /* subtle background for readability */
+  backdrop-filter: blur(4px);
+  padding: 0.75rem 1.5rem;
+  border-radius: 40px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+.bio h2 {
+  margin-bottom: 0.25rem;
 }
 .skills {
   margin-top: 1.5rem;
@@ -263,4 +274,92 @@ hr {
 }
 .modal-link-btn:hover {
   background: #eab308;
+}
+
+/* ========== RESPONSIVE FOR SMALL SCREENS ========== */
+@media (max-width: 640px) {
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+  .logo {
+    text-align: center;
+  }
+  nav {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .flex {
+    justify-content: center;
+  }
+  .cover-img {
+    height: 150px;
+    margin-bottom: 0.5rem;
+  }
+  .profile-row {
+    margin-top: -36px; /* slightly less pull on mobile */
+    gap: 1rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+  }
+  .bio {
+    min-width: auto;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    backdrop-filter: blur(4px);
+  }
+  .bio h2 {
+    font-size: 1.5rem;
+  }
+  /* smaller project cards */
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.75rem;
+  }
+  .project-card .card-title {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+  /* skill tags stay clean */
+  .skill-tag {
+    padding: 0.2rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  .checkbox-group {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .login-section .flex {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .login-section input,
+  .login-section button {
+    width: 100%;
+    margin: 0.25rem 0;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+  footer {
+    padding: 1.5rem;
+  }
+  .modal-content {
+    padding: 1.5rem;
+  }
+  .close {
+    top: 0.75rem;
+    right: 1rem;
+    font-size: 1.8rem;
+  }
+  #admin-panel {
+    padding: 1rem;
+  }
 }
