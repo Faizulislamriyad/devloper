@@ -29,77 +29,33 @@
                 <img id="profile-photo" class="profile-photo" src="riyad.png" alt="profile" style="aspect-ratio: 1/1; object-fit: cover;">
                 <div class="bio">
                     <h2 id="bio-text">FAIZUL ISLAM RIYAD</h2>
-                    <p>I craft digital experiences with a focus on uniqueness. This portfolio adapts to your preferences. You can toggle every block below.</p>
+                    <p id="bio-paragraph">I have a rare ability to think differently and simplify complex ideas into elegant, practical solutions. This allows me to design and build projects with unique, innovative features that are both user-friendly and impactful. My work focuses on creativity, clarity, and functionality, ensuring every project stands out with its originality and effectiveness.</p>
                 </div>
             </div>
             <div id="skills-list" class="skills">
-                <span class="skill-tag">HTML/CSS</span>
-                <span class="skill-tag">JavaScript</span>
-                <span class="skill-tag">React</span>
-                <span class="skill-tag">Firebase</span>
-                <span class="skill-tag">UI/UX</span>
-                <span class="skill-tag">Node.js</span>
-                <span class="skill-tag">Figma</span>
+                <!-- skills will be injected here -->
             </div>
         </section>
 
-        <!-- EXPERIENCE & EDUCATION -->
+        <!-- EXPERIENCE & EDUCATION (now dynamic) -->
         <section id="experience">
-            <h2 style="margin: 3rem 0 1rem;">📚 experience & education</h2>
             <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 250px; background: white; padding: 1.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-                    <h3>💼 work</h3>
-                    <ul style="margin-top: 1rem; list-style: none;">
-                        <li style="margin-bottom: 1rem;"><strong>Frontend Dev</strong> — Studio Oktopus (2023–present)</li>
-                        <li style="margin-bottom: 1rem;"><strong>UI/UX intern</strong> — DesignLab (2022–2023)</li>
-                    </ul>
+                <div style="flex: 1; min-width: 250px; background: white; padding: 1.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-top: 30px;">
+                    <h3>💼 Work</h3>
+                    <ul id="work-list-display" style="margin-top: 1rem; list-style: none;"></ul>
                 </div>
                 <div style="flex: 1; min-width: 250px; background: white; padding: 1.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-                    <h3>🎓 education</h3>
-                    <ul style="margin-top: 1rem; list-style: none;">
-                        <li style="margin-bottom: 1rem;"><strong>B.Sc. in CSE</strong> — University of Design (2018–2022)</li>
-                        <li style="margin-bottom: 1rem;"><strong>Cert. in UX</strong> — Interaction Design Foundation</li>
-                    </ul>
+                    <h3>🎓 Education</h3>
+                    <ul id="education-list-display" style="margin-top: 1rem; list-style: none;"></ul>
                 </div>
             </div>
         </section>
 
-        <!-- PROJECTS SECTION with data attributes -->
+        <!-- PROJECTS SECTION -->
         <section id="projects">
             <h2 style="margin: 3rem 0 1rem;">Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card" onclick="showProjectDetails(this)"
-                     data-description="A brutalist dashboard with neo elements. Built with React and D3."
-                     data-link="https://ramadantime-five.vercel.app/">
-                    <div class="card-image">
-                        <img src="ramdan.jpg" alt="NeoBrutal dashboard" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
-                    <div class="card-title">Ramdan Times</div>
-                </div>
-                <div class="project-card" onclick="showProjectDetails(this)"
-                     data-description="AI-generated motion gallery using TensorFlow.js and Canvas."
-                     data-link="https://example.com/ai-motion">
-                    <div class="card-image">
-                        <img src="https://picsum.photos/300/300?random=2" alt="AI motion gallery" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
-                    <div class="card-title">AI motion gallery</div>
-                </div>
-                <div class="project-card" onclick="showProjectDetails(this)"
-                     data-description="Peer-to-peer weather sharing app with WebRTC and OpenWeather API."
-                     data-link="https://example.com/weather-p2p">
-                    <div class="card-image">
-                        <img src="https://picsum.photos/300/300?random=3" alt="Weather p2p" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
-                    <div class="card-title">Weather p2p</div>
-                </div>
-                <div class="project-card" onclick="showProjectDetails(this)"
-                     data-description="Eco tracker for carbon footprint using Leaflet maps and local storage."
-                     data-link="https://example.com/eco-tracker">
-                    <div class="card-image">
-                        <img src="https://picsum.photos/300/300?random=4" alt="Eco tracker" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
-                    <div class="card-title">Eco tracker</div>
-                </div>
+            <div class="projects-grid" id="projects-grid">
+                <!-- projects will be injected here -->
             </div>
         </section>
 
@@ -117,7 +73,7 @@
             </div>
         </section>
 
-        <!-- HIRE / CUSTOMIZATION SECTION -->
+        <!-- HIRE / CUSTOMIZATION SECTION (now with edit panels) -->
         <section id="hire">
             <h2>⚙️ customize your portfolio</h2>
             <div id="login-section" class="login-section hire-panel">
@@ -155,6 +111,39 @@
                 </div>
                 <button id="save-settings">💾 save settings to Firebase</button>
             </div>
+
+            <!-- Admin edit panels (visible only to admin) -->
+            <div id="profile-edit" class="edit-panel" style="display: none;">
+                <h3>✏️ Edit Profile</h3>
+                <input type="text" id="edit-name" placeholder="Full Name">
+                <textarea id="edit-bio" placeholder="Bio"></textarea>
+                <input type="text" id="edit-profile-photo" placeholder="Profile Photo URL">
+                <input type="text" id="edit-cover-photo" placeholder="Cover Photo URL">
+                <input type="text" id="edit-skills" placeholder="Skills (comma separated)">
+                <button id="save-profile">Save Profile</button>
+            </div>
+
+            <div id="work-edit" class="edit-panel" style="display: none;">
+                <h3>💼 Edit Work Experience</h3>
+                <div id="work-list"></div>
+                <button id="add-work">Add Work</button>
+                <button id="save-work">Save Work</button>
+            </div>
+
+            <div id="education-edit" class="edit-panel" style="display: none;">
+                <h3>🎓 Edit Education</h3>
+                <div id="education-list"></div>
+                <button id="add-education">Add Education</button>
+                <button id="save-education">Save Education</button>
+            </div>
+
+            <div id="projects-edit" class="edit-panel" style="display: none;">
+                <h3>📁 Edit Projects</h3>
+                <div id="projects-list"></div>
+                <button id="add-project">Add Project</button>
+                <button id="save-projects">Save Projects</button>
+            </div>
+
             <div id="admin-panel" style="display: none;">
                 <h3>👁️ admin tasks (all settings docs)</h3>
                 <div id="admin-task-list">loading tasks...</div>
@@ -170,17 +159,18 @@
         </div>
     </footer>
 
-    <!-- PROJECT DETAIL MODAL with description and link button -->
+    <!-- PROJECT DETAIL MODAL -->
     <div id="project-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2 id="modal-title">Project title</h2>
-            <p id="modal-desc">Detailed description goes here.</p>
+            <div id="modal-desc"></div>
             <a id="modal-link" href="#" target="_blank" class="modal-link-btn">🔗 View Project</a>
         </div>
     </div>
 
     <script>
+        // Placeholder functions (will be overwritten by module)
         window.showProjectDetails = window.showProjectDetails || function(card){ alert('Project details'); };
         window.closeModal = window.closeModal || function(){ document.getElementById('project-modal').style.display='none'; };
     </script>
