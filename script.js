@@ -1,6 +1,6 @@
 // Import Firebase modules
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js';
 
@@ -26,7 +26,6 @@ const adminPanel = document.getElementById('admin-panel');
 const loginEmail = document.getElementById('login-email');
 const loginPassword = document.getElementById('login-password');
 const loginBtn = document.getElementById('login-btn');
-const signupBtn = document.getElementById('signup-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const saveSettingsBtn = document.getElementById('save-settings');
@@ -70,6 +69,7 @@ const educationDisplay = document.getElementById('education-list-display');
 const projectsGrid = document.getElementById('projects-grid');
 
 const SETTINGS_DOC = 'portfolioSettings';
+const ADMIN_EMAIL = 'mdriyadboss1234@gmail.com';
 
 // Default data
 const defaultSettings = {
@@ -102,10 +102,8 @@ function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); 
 function isValidPassword(pass) { return pass.length >= 6; }
 function setButtonsLoading(loading) {
   loginBtn.disabled = loading;
-  signupBtn.disabled = loading;
   saveSettingsBtn.disabled = loading;
   loginBtn.textContent = loading ? '⏳' : 'Login';
-  signupBtn.textContent = loading ? '⏳' : 'Signup';
 }
 
 // Load settings and apply to UI
@@ -130,7 +128,7 @@ async function loadSettingsAndApply() {
     // Update projects
     updateProjects(settings.projects);
     // Fill edit forms if admin
-    if (auth.currentUser) {
+    if (auth.currentUser && auth.currentUser.email === ADMIN_EMAIL) {
       fillEditForms(settings);
     }
   } catch (error) {
@@ -220,11 +218,11 @@ function updateCheckboxes(settings) {
   document.getElementById('footer-social-check').checked = settings.footer?.showSocial ?? true;
 }
 
-// Save visibility settings (original)
+// Save visibility settings
 async function saveSettingsToFirebase() {
   const user = auth.currentUser;
-  if (!user) {
-    alert('Please login first to save settings.');
+  if (!user || user.email !== ADMIN_EMAIL) {
+    alert('Only admin can save settings.');
     return;
   }
   const menu = [];
@@ -319,7 +317,7 @@ function removeProjectEntry(e) {
 // Save profile
 saveProfileBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
-  if (!user) return alert('Login required');
+  if (!user || user.email !== ADMIN_EMAIL) return alert('Admin only');
   
   const settingsRef = doc(db, 'settings', SETTINGS_DOC);
   const docSnap = await getDoc(settingsRef);
@@ -341,7 +339,7 @@ saveProfileBtn.addEventListener('click', async () => {
 // Save work
 saveWorkBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
-  if (!user) return alert('Login required');
+  if (!user || user.email !== ADMIN_EMAIL) return alert('Admin only');
   
   const entries = Array.from(document.querySelectorAll('.work-entry')).map(div => ({
     title: div.querySelector('.work-title').value,
@@ -363,7 +361,7 @@ saveWorkBtn.addEventListener('click', async () => {
 // Save education
 saveEducationBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
-  if (!user) return alert('Login required');
+  if (!user || user.email !== ADMIN_EMAIL) return alert('Admin only');
   
   const entries = Array.from(document.querySelectorAll('.edu-entry')).map(div => ({
     degree: div.querySelector('.edu-degree').value,
@@ -383,7 +381,7 @@ saveEducationBtn.addEventListener('click', async () => {
 // Save projects
 saveProjectsBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
-  if (!user) return alert('Login required');
+  if (!user || user.email !== ADMIN_EMAIL) return alert('Admin only');
   
   const entries = Array.from(document.querySelectorAll('.project-entry')).map((div, idx) => ({
     id: idx + 1,
@@ -488,28 +486,49 @@ window.onclick = function(event) {
   if (event.target === modal) modal.style.display = 'none';
 };
 
-// Auth UI
-function updateAuthUI(user) {
+// ---------- UPDATED AUTH LOGIC ----------
+loginBtn.addEventListener('click', async () => {
+  const email = loginEmail.value.trim();
+  const pass = loginPassword.value.trim();
+  if (!isValidEmail(email)) return alert('Valid email required.');
+  if (!isValidPassword(pass)) return alert('Password must be at least 6 characters.');
+  setButtonsLoading(true);
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    // onAuthStateChanged will handle the rest
+  } catch (err) {
+    alert('Login failed: ' + err.message);
+  } finally {
+    setButtonsLoading(false);
+  }
+});
+
+logoutBtn.addEventListener('click', () => signOut(auth));
+
+// Monitor auth state and enforce admin-only
+onAuthStateChanged(auth, user => {
   if (user) {
+    // Check if the logged-in user is the specific admin
+    if (user.email !== ADMIN_EMAIL) {
+      // Not allowed – sign out and show message
+      signOut(auth);
+      alert('Access denied. Only the admin (mdriyadboss1234@gmail.com) can log in.');
+      return;
+    }
+    // Admin is logged in – show UI
     loginSection.style.display = 'none';
     logoutBtn.style.display = 'inline-block';
     userInfo.textContent = `Hi, ${user.email}`;
     hirePanel.style.display = 'block';
-    if (user.email === 'admin@ekta.com') {
-      adminPanel.style.display = 'block';
-      loadAdminTasks();
-      profileEdit.style.display = 'block';
-      workEdit.style.display = 'block';
-      educationEdit.style.display = 'block';
-      projectsEdit.style.display = 'block';
-    } else {
-      adminPanel.style.display = 'none';
-      profileEdit.style.display = 'none';
-      workEdit.style.display = 'none';
-      educationEdit.style.display = 'none';
-      projectsEdit.style.display = 'none';
-    }
+    adminPanel.style.display = 'block';
+    profileEdit.style.display = 'block';
+    workEdit.style.display = 'block';
+    educationEdit.style.display = 'block';
+    projectsEdit.style.display = 'block';
+    loadAdminTasks();
+    loadSettingsAndApply(); // reload with admin rights
   } else {
+    // Not logged in – show public view
     loginSection.style.display = 'block';
     logoutBtn.style.display = 'none';
     userInfo.textContent = '';
@@ -519,8 +538,15 @@ function updateAuthUI(user) {
     workEdit.style.display = 'none';
     educationEdit.style.display = 'none';
     projectsEdit.style.display = 'none';
+    // Load default public view
+    updateMenuVisibility(defaultSettings.menu);
+    applyFeatures(defaultSettings.features);
+    applyFooter(defaultSettings.footer);
+    updateProfile(defaultSettings.profile);
+    updateWorkEducation(defaultSettings.work, defaultSettings.education);
+    updateProjects(defaultSettings.projects);
   }
-}
+});
 
 async function loadAdminTasks() {
   try {
@@ -535,55 +561,6 @@ async function loadAdminTasks() {
     adminTaskList.innerHTML = '<p>Error loading tasks</p>';
   }
 }
-
-// Login / Signup
-loginBtn.addEventListener('click', async () => {
-  const email = loginEmail.value.trim();
-  const pass = loginPassword.value.trim();
-  if (!isValidEmail(email)) return alert('Valid email required.');
-  if (!isValidPassword(pass)) return alert('Password must be at least 6 characters.');
-  setButtonsLoading(true);
-  try {
-    await signInWithEmailAndPassword(auth, email, pass);
-  } catch (err) {
-    alert('Login failed: ' + err.message);
-  } finally {
-    setButtonsLoading(false);
-  }
-});
-
-signupBtn.addEventListener('click', async () => {
-  const email = loginEmail.value.trim();
-  const pass = loginPassword.value.trim();
-  if (!isValidEmail(email)) return alert('Valid email required.');
-  if (!isValidPassword(pass)) return alert('Password must be at least 6 characters.');
-  setButtonsLoading(true);
-  try {
-    await createUserWithEmailAndPassword(auth, email, pass);
-    alert('Account created!');
-  } catch (err) {
-    alert('Signup failed: ' + err.message);
-  } finally {
-    setButtonsLoading(false);
-  }
-});
-
-logoutBtn.addEventListener('click', () => signOut(auth));
-
-onAuthStateChanged(auth, user => {
-  updateAuthUI(user);
-  if (user) {
-    loadSettingsAndApply();
-  } else {
-    // Load default public view
-    updateMenuVisibility(defaultSettings.menu);
-    applyFeatures(defaultSettings.features);
-    applyFooter(defaultSettings.footer);
-    updateProfile(defaultSettings.profile);
-    updateWorkEducation(defaultSettings.work, defaultSettings.education);
-    updateProjects(defaultSettings.projects);
-  }
-});
 
 saveSettingsBtn.addEventListener('click', saveSettingsToFirebase);
 
